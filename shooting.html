@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Mini Shooting Game</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{
+  margin:0;
+  background:#0f172a;
+  color:white;
+  font-family:Arial;
+  text-align:center;
+}
+#game{
+  width:100%;
+  height:500px;
+  background:#020617;
+  position:relative;
+  overflow:hidden;
+}
+.player{
+  width:40px;
+  height:40px;
+  background:lime;
+  position:absolute;
+  bottom:20px;
+  left:50%;
+}
+.enemy{
+  width:40px;
+  height:40px;
+  background:red;
+  position:absolute;
+  top:0;
+}
+.bullet{
+  width:6px;
+  height:15px;
+  background:yellow;
+  position:absolute;
+}
+button{
+  padding:15px 30px;
+  font-size:18px;
+  margin:10px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>🔫 Mini Shooting Game (BGMI Style)</h2>
+<p>Score: <span id="score">0</span></p>
+
+<div id="game">
+  <div class="player" id="player"></div>
+</div>
+
+<button onclick="shoot()">🔫 Shoot</button>
+
+<script>
+let game = document.getElementById("game");
+let player = document.getElementById("player");
+let score = 0;
+
+// Move player
+document.addEventListener("mousemove", e=>{
+  let rect = game.getBoundingClientRect();
+  let x = e.clientX - rect.left - 20;
+  if(x>0 && x<game.offsetWidth-40){
+    player.style.left = x+"px";
+  }
+});
+
+// Shoot
+function shoot(){
+  let bullet = document.createElement("div");
+  bullet.className = "bullet";
+  bullet.style.left = player.offsetLeft + 17 + "px";
+  bullet.style.bottom = "60px";
+  game.appendChild(bullet);
+
+  let move = setInterval(()=>{
+    bullet.style.bottom = bullet.offsetBottom + 10 + "px";
+
+    document.querySelectorAll(".enemy").forEach(enemy=>{
+      if(
+        bullet.offsetTop < enemy.offsetTop + 40 &&
+        bullet.offsetLeft < enemy.offsetLeft + 40 &&
+        bullet.offsetLeft + 6 > enemy.offsetLeft
+      ){
+        enemy.remove();
+        bullet.remove();
+        score++;
+        document.getElementById("score").innerText = score;
+      }
+    });
+
+    if(bullet.offsetTop < 0){
+      bullet.remove();
+      clearInterval(move);
+    }
+  },30);
+}
+
+// Enemies
+setInterval(()=>{
+  let enemy = document.createElement("div");
+  enemy.className = "enemy";
+  enemy.style.left = Math.random()*(game.offsetWidth-40)+"px";
+  game.appendChild(enemy);
+
+  let fall = setInterval(()=>{
+    enemy.style.top = enemy.offsetTop + 3 + "px";
+    if(enemy.offsetTop > game.offsetHeight){
+      enemy.remove();
+      clearInterval(fall);
+    }
+  },30);
+},1200);
+</script>
+
+</body>
+</html>
+  
