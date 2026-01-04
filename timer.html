@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Timer Game</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{background:#0f172a;color:white;text-align:center;font-family:Arial}
+button{padding:15px 30px;font-size:18px;border:none;border-radius:10px}
+</style>
+</head>
+<body>
+
+<h1>⏱️ Timer Game</h1>
+<p id="time">10</p>
+<button onclick="start()">Start</button>
+
+<script>
+let t=10, i;
+function start(){
+ i=setInterval(()=>{
+  t--;
+  document.getElementById("time").innerText=t;
+  if(t==0){alert("Time Up!");clearInterval(i);t=10;}
+ },1000);
+}
+</script>
+
+</body>
+</html>
