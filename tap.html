@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tap Challenge Game</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#020617;
+  color:white;
+  text-align:center;
+}
+#box{
+  width:80px;
+  height:80px;
+  background:#22c55e;
+  position:absolute;
+  border-radius:50%;
+}
+button{
+  padding:15px 30px;
+  font-size:18px;
+  margin-top:20px;
+}
+</style>
+</head>
+<body>
+
+<h2>🎯 Tap Challenge</h2>
+<p>Score: <span id="score">0</span></p>
+<p>Time: <span id="time">30</span>s</p>
+
+<button onclick="startGame()">Start Game</button>
+
+<div id="box" onclick="tap()" style="display:none;"></div>
+
+<script>
+let score=0, time=30, timer;
+let box=document.getElementById("box");
+
+function startGame(){
+ score=0; time=30;
+ document.getElementById("score").innerText=score;
+ document.getElementById("time").innerText=time;
+ box.style.display="block";
+
+ timer=setInterval(()=>{
+  time--;
+  document.getElementById("time").innerText=time;
+  if(time==0){
+   clearInterval(timer);
+   box.style.display="none";
+   alert("Game Over! Your Score: "+score);
+  }
+ },1000);
+
+ moveBox();
+}
+
+function moveBox(){
+ let x=Math.random()*(window.innerWidth-100);
+ let y=Math.random()*(window.innerHeight-200)+100;
+ box.style.left=x+"px";
+ box.style.top=y+"px";
+}
+
+function tap(){
+ score++;
+ document.getElementById("score").innerText=score;
+ moveBox();
+}
+</script>
+
+</body>
+  </html>
+  
