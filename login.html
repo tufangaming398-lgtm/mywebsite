@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{
+ background:#020617;
+ font-family:Arial;
+ color:white;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ height:100vh;
+}
+.box{
+ background:#1e293b;
+ padding:25px;
+ border-radius:12px;
+ width:320px;
+ text-align:center;
+}
+input,button{
+ width:100%;
+ padding:12px;
+ margin:10px 0;
+ border:none;
+ border-radius:8px;
+}
+button{
+ background:#22c55e;
+ font-size:16px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+ <h2>Login / Sign Up</h2>
+ <input type="email" id="email" placeholder="Email">
+ <input type="password" id="password" placeholder="Password">
+ <button onclick="login()">Login</button>
+ <button onclick="signup()">Sign Up</button>
+ <p id="msg"></p>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } 
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCrsPH_DamdjFvhZW29kvJ_D1uF6jiQaOI",
+    authDomain: "my-gaming-website-217d3.firebaseapp.com",
+    projectId: "my-gaming-website-217d3",
+    storageBucket: "my-gaming-website-217d3.firebasestorage.app",
+    messagingSenderId: "179599990178",
+    appId: "1:179599990178:web:7395304b9bc3defd43e6fb"
+  }
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.login = function(){
+ signInWithEmailAndPassword(auth,email.value,password.value)
+ .then(()=>{
+  window.location.href="index.html";
+ })
+ .catch(err=>{
+  msg.innerText=err.message;
+ });
+}
+
+window.signup = function(){
+ createUserWithEmailAndPassword(auth,email.value,password.value)
+ .then(()=>{
+  alert("Account created! Now login.");
+ })
+ .catch(err=>{
+  msg.innerText=err.message;
+ });
+}
+</script>
+
+</body>
+</html>
