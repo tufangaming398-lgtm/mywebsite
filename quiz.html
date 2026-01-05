@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Quiz Game</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#020617;
+  color:white;
+  text-align:center;
+  padding:20px;
+}
+.quiz-box{
+  background:#1e293b;
+  padding:20px;
+  border-radius:12px;
+  max-width:400px;
+  margin:auto;
+}
+button{
+  display:block;
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  font-size:16px;
+  border:none;
+  border-radius:8px;
+  background:#3b82f6;
+  color:white;
+}
+button:hover{
+  background:#2563eb;
+}
+</style>
+</head>
+
+<body>
+
+<h2>🧠 Quiz Game</h2>
+
+<div class="quiz-box">
+  <p id="question"></p>
+  <button onclick="check(0)" id="b0"></button>
+  <button onclick="check(1)" id="b1"></button>
+  <button onclick="check(2)" id="b2"></button>
+  <button onclick="check(3)" id="b3"></button>
+  <p>Score: <span id="score">0</span></p>
+</div>
+
+<script>
+let q = [
+  {
+    ques:"Which game is made by Krafton?",
+    opt:["Free Fire","BGMI","PUBG Lite","Call of Duty"],
+    ans:1
+  },
+  {
+    ques:"HTML is used for?",
+    opt:["Styling","Structure","Logic","Database"],
+    ans:1
+  },
+  {
+    ques:"Which color means danger?",
+    opt:["Green","Blue","Red","Yellow"],
+    ans:2
+  }
+];
+
+let index=0, score=0;
+
+function load(){
+ document.getElementById("question").innerText=q[index].ques;
+ for(let i=0;i<4;i++){
+  document.getElementById("b"+i).innerText=q[index].opt[i];
+ }
+}
+load();
+
+function check(i){
+ if(i==q[index].ans){
+  score++;
+  document.getElementById("score").innerText=score;
+ }
+ index++;
+ if(index<q.length){
+  load();
+ }else{
+  alert("Quiz Finished! Your Score: "+score);
+  index=0; score=0;
+  document.getElementById("score").innerText=0;
+  load();
+ }
+}
+</script>
+
+</body>
+</html>
